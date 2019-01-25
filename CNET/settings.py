@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for cnet_crawl project
+# Scrapy settings for CNET project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'cnet_crawl'
+BOT_NAME = 'CNET'
 
-SPIDER_MODULES = ['cnet_crawl.spiders']
-NEWSPIDER_MODULE = 'cnet_crawl.spiders'
+SPIDER_MODULES = ['CNET.spiders']
+NEWSPIDER_MODULE = 'CNET.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'cnet_crawl (+http://www.yourdomain.com)'
+#USER_AGENT = 'CNET (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'cnet_crawl.middlewares.CnetCrawlSpiderMiddleware': 543,
+#    'CNET.middlewares.CnetSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'cnet_crawl.middlewares.CnetCrawlDownloaderMiddleware': 543,
+#    'CNET.middlewares.CnetDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'cnet_crawl.pipelines.CnetCrawlPipeline': 300,
+#    'CNET.pipelines.CnetPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
