@@ -4,8 +4,9 @@ import scrapy
 import pdb
 import re
 client = MongoClient('localhost', 27017)
-db = client.CNET 
-col = db['articles']
+db = client.cross_language 
+document = db['document']
+paragraph = db['paragraph']
 class NewsSpider(scrapy.Spider):
   name = "tech-industry"
   start_urls = [ "https://www.cnet.com/topics/tech-industry/"]
@@ -18,7 +19,7 @@ class NewsSpider(scrapy.Spider):
     list_news = [x for x in links if re.match(regex,x)]
     exist = False
     for i in list_news:
-      if(col.find({"link": source + i}).count() > 0):
+      if(document.find({"link": source + i}).count() > 0):
         exist = True
         break
       yield scrapy.Request(source + i, callback= self.importMongo)
@@ -33,7 +34,17 @@ class NewsSpider(scrapy.Spider):
       yield scrapy.Request(next_url, callback= self.parse)        
 
   def importMongo(self, response):
-    list_sentences = response.xpath('//article[@id="article-body"]/div[@class="col-7 article-main-body row"]/p/text()').extract()
-    content = "".join(list_sentences)
+    # list_sentences = response.xpath('//article[@id="article-body"]/div[@class="col-7 article-main-body row"]/p/text()').extract()
+    raw_paragraphs = response.xpath('//article[@id="article-body"]/div[@class="col-7 article-main-body row"]/p').extract()
+    paragraphs = [re.sub(r"\<.*?\>", "", item) for item in raw_paragraphs]
+    content = "".join(paragraphs)
+    title = response.xpath('//div[@id="rbContent"]/div[@class="pageWrapper pageContainer current "]/div[@class="content-header"]/div[@class="hero-content"]/div[@class="container"]/div[@class="col-10 articleHead"]/h1/text()').extract()[0]
     link = response.url
-    col.insert_one({"link": link,"content": content})
+    document_insert = document.insert_one({"title": title,"link": link,"content": content})
+    temp = ""
+    for item in paragraphs:
+      temp += item + " "
+      if(len(temp) > 35):
+        paragraph.insert_one({"content": temp, "document_id": document_insert.inserted_id})
+        temp = ""
+
