@@ -4,7 +4,7 @@ import scrapy
 import pdb
 import re
 client = MongoClient('localhost', 27017)
-db = client.cross_language 
+db = client.cnet 
 document = db['document']
 paragraph = db['paragraph']
 class NewsSpider(scrapy.Spider):
@@ -20,6 +20,7 @@ class NewsSpider(scrapy.Spider):
     exist = False
     for i in list_news:
       if(document.find({"link": source + i}).count() > 0):
+        pdb.set_trace()
         exist = True
         break
       yield scrapy.Request(source + i, callback= self.importMongo)
